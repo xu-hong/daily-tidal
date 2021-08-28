@@ -1,0 +1,36 @@
+-- off
+
+
+-- let's start with two notes
+d1 $ n "c e d f" # s "supermandolin"
+
+
+
+:t off
+-- off
+--   :: Pattern Time
+--      -> (Pattern a -> Pattern a) -> Pattern a -> Pattern a
+
+-- off by a quarter, shorthand "q"
+-- 32nd -> "0.5s"
+d1 $ off "0.5s" (|+ note 1)
+   $ n "c <e f>" # s "supermandolin"
+
+-- the original notes are untouched
+
+
+d1 $ off "e" (|+ n 7)
+   $ n (slow 2 "c(3,8) d(5,8) e*2 f*3") # s "supermandolin"
+   -- # sustain 2
+
+-- the notes are getting very short bc of denser patterns,
+-- to match the shorter step sizes
+-- can change that with longer legato or sustain
+
+d1 $ fast 2
+   $ off "e" (|+ n "-12")
+   $ struct "1 1 1 1"
+   $ n (scale "minPent" $ irand 5 ) # s "supersaw"
+   # lpf 1000 # lpq 0.1 # legato 0.5
+
+scaleList

@@ -1,0 +1,56 @@
+
+d2 $ qtrigger 1 $ slow 4 $ stack [
+n " f3  f3  c3 d3",
+n " bf3 a3  e3 fs3",
+n " e2  gf2 g2 a2",
+n " c3  af3  e2 b2"
+] # s "superpiano"
+-- |+ n "12"
+# sus 2 # lpf 1200
+
+
+d3 $ qtrigger 1 $ slow 4
+$ n "<[f5 ~ ~ ~] [~ a5 ~ ~ ] [~ ~ e5 ~]>" # s "superpiano" # sus 2
+
+d3 $ qtrigger 1 $ slow 4 $ chunk 4 ((# gain 1) . (|+ n 24))
+$ n "f3 a3 e3 fs3" # s "superpiano" # sus 2 # gain 0
+
+
+
+d6 $ struct "1 0 1 0" $ s "goldbd" # n "<1 1 1 3>" # gain 2
+
+
+
+let scale = getScale (scaleTable ++ [("techno", [0,2,3,5,7,8,10]),
+                                     ("broken", [0,1,4,7,8,10])
+                                    ])
+
+
+d1
+$ qtrigger 1 $ seqPLoop [
+(0, 4, slow 4 $ n "d3  f3  f3  c3" # s "supersaw" # lpf 1000),
+(4, 8, slow 4 $ n "f3 a3 bf3  e3" # s "supersaw" # lpf 1000),
+(8, 12, slow 4 $ n "bf2  gf2  e2  g2" # s "supersaw" # lpf 1000),
+(12, 16, slow 4 $ n "b2  g2  e2  a2" # s "supersaw" # lpf 1000)
+]
+
+
+d3 $ qtrigger 1
+$ fast 2 $ n (arp "diverge" "<[d3 fs3 a2 c3] [f3 bf3 e2 af3]> ")
+# s "supersaw" # lpf 1000 # lpq 0.2
+
+
+d3 $ qtrigger 1
+$ fast 2 $ n (arp "diverge" "<[f3 a3 gf2 e2] [c3 e3 g2 b2]>")
+# s "supersaw" # lpf 1000 # lpq 0.2
+
+
+-- surround a single note
+d1 $ slow 2 $ n "b2 b2 b2 b2" # s "cs" # lpf 1000 # gain 1.2 |+ n "<0 0 0 0 3 3 1>"
+
+d2 $ qtrigger 1
+ $ fast 2 $ n "{c3 c3 d3 d3 e3 <fs3 a3 c3>}%4" # s "saws"
+
+
+d1 $ s "[909hc:6!16?, chin!8]"
+# gain (range 0.8 1.2 $ slow 4 sine) # pan (truRand 1341) # legato 1

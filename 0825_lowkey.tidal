@@ -1,0 +1,69 @@
+d2 $ chop 16 $ s "bang:0" # gain 2
+
+d1 $ s "house claus:5(3,8) dbass*2 dr2(5,8)"
+
+
+--- inspired by above....
+
+d1 $ stack [
+struct "1 0 1 0 1 0 1 0" $ s "house",
+struct "0 [0 1 0] 0 [0 1 0] 0 0 0 0" $ s "claus" # gain 0.8,
+struct "0 1?" $ s "dbass",
+struct "0 0 0 1(5,8)" $ s "dr2"
+] # gain 0.8
+
+m1
+
+d1 $ s "house house house house" # gain 2
+
+d1 $ s "[chin!16?, ~ ~ bd1200 ~, dbass?]" # gain 2
+
+d4 $ scramble 16 $ chop 16 $ s "bang:0" # gain 2
+
+d2 $ degrade
+$ every 4 (|+ n "24")
+$ n "<ds2 cs2>(5,8)"
+# s "supersaw" # lpf 1000 # gain 1
+
+d3 $ n "as(3,8, <1 2 3>)" # s "supersaw" # lpf 1000
+
+m4
+m2
+
+d3
+ -- $ rarely (scramble 8)
+ -- $ every 3 (# crush 8)
+ $ degrade
+ $ echo
+ -- $ plydowndown 4 0.8
+ $ swingy''
+ $ every 4 (|+ n "19 12")
+ -- $ off 0.125 (|+ n 7)
+ $ n "ds(5,8) fs(3,8,<1 2>)" # s "abd" # gain 3
+
+ m3
+
+
+------
+
+
+d2
+$ slow 2
+$ sometimes (shift 0.125)
+$ off (1/16) (|+ n 7)
+$ n "ds(3,8) fs*4 ~ gs(5,8)" # s "xyl"
+
+
+d3
+$ rslice 16 4
+-- $ scramble 16
+-- $ chop 16
+$ s "urban:1"
+# lpf (slow 4 $ range 200 1000 sine)
+# gain (range 0.8 1 sine)
+
+
+d1 $ rotL 4 $ chop 4 $ s "pegio:0"
+
+d4 $ chop 16 $ s "bang:0" # gain 2
+m4

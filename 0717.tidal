@@ -1,0 +1,115 @@
+--- https://www.youtube.com/watch?v=oUbACkekJZ8
+--- techno rumbles
+
+setcps(135/60/4)
+
+d1 $ s "909kick!4" # n "21"
+
+d2 $ stack [
+  s "909kick!4"
+  # crush 12 # lpf 100 # lpq 0.2
+  # delay 0.2 # delayfb 0.8 # delaytime (1/32)
+  # octersubsub 2 -- nice satuation, alternatively, octersub
+] # octersub 2 # n "21" -- 0, 8, 21, 25
+
+d2 silence
+
+d3 $ s "909kick:21!4" # bandf 0.5 # bandq 0.3
+# delay 0.8 # delayfb 0.8 # delaytime 0.1
+# room 0.1 # sz 0.6
+# pan (wchoose [(0.5, 9), (1, 1), (0, 1)])
+
+d3 silence
+
+d4 $ degradeBy 0.2
+$ struct "~ ~ t ~ ~ t ~ t?0.8" $ s "awtom:8"  -- awtom:8 goldtom:5
+# lpf 200
+
+d4 silence
+
+d5 $ rarely (|-| n "12 <5 0>")
+$ jux rev --
+$ sometimes (# crush 6) -- . rev
+$ chunk 8 (# vowel "<a o>")
+$ n "g ~ ~ g ~ ~ <b b b e> ~" # s "string2"
+
+d5 silence
+
+
+d6 $ struct "t t t t t? t? t t?" $ s (wchoose [("abd", 20), ("cs", 1)])
+# n "g'major7"
+# room 0.4
+# gain 1.4
+
+d6 silence
+
+
+---- inspired Hieroglyphs by TRZTN, Karen O
+
+d7 $ s "chin*16" # n 5 |+| note "0 1 2 3 4 5 6 7 8 7 6 5 4 3 2 0"
+
+d8
+$ sometimes (# crush 4)
+$ superimpose (stut 3 0.8 0.02)
+$ s "industrial(3,8)"
+# room 0.4 # sz 0.5 # lpf 10000 # lpq 0.2
+# speed 2
+# delay 0.3 # delaytime 0.1 # delayfb 0.6
+# pan (wchoose [(0, 4), (0.5, 10)])
+# gain 0.8
+
+d8 silence
+
+d9 $ slow 4
+$ slice 16 (segment 8 $ irand 16) $ s "vinyl" # n "<5 5 5 5 5 2>"
+
+d10 $ swingBy 0.01 4
+$ off 0.125 (|+ note "7") --- start with |-, later goes to |+, then 19
+$ off 0.125 (|- note "<5 0>")
+-- $ iter 8
+-- $ jux rev
+$ chunk 4 (# crush 6) . (|+ note "<3 0>")
+$ slow 4
+$ n "af(5,8,<0 1 2>) df(3,8)" # s "fmr1"
+# room 0.4 # sz 0.4 # shape 0.9
+# lpf 5000
+
+d10 silence
+
+d11 $ s "cpu2*4" # gain 1.5
+
+d1 $ n "~ ~ ~ bf6 ~ bf6?0.6" # s "superpiano" # sus 2 # rel 3 # gain 3
+
+----- some melody work ----
+
+d2 $ slow 4
+$ s "superhammond" >| n "ef3 ef4 f3 f4" # rel 5
+
+xfade 2 $ slow 4
+$ s "superhammond" >| n "af3 af4 f3 f4" # rel 5
+
+d2 silence
+
+d3
+$ s "superpiano" >| n "<ef'major ef'major f'major f'major>" # sus 3
+
+xfade 3
+$ s "superpiano" >| n "<ef'min ef'min f'min f'min>" # sus 3
+
+xfade 3
+$ sometimes (|+| n "12 7")
+$ off 0.125 (|+| n 12)
+-- $ chunk 8 (# gain 0.2)
+$ s "superpiano" >| n "<af(3,8) f(3,8,2)>" # sus 2
+# gain 0.9
+
+d9 $ slow 4
+$ slice 16 (segment 8 $ irand 8) $ s "vinyl" # n "<5 5 5 5 5 2>"
+# gain 0.6
+
+d5 -- $ degradeBy 0.4
+   $ every 3 (# crush 3)
+   $ slow 16 $ scramble 16 $ chop 16 $ s "urban"
+   # n "<0 1>"
+
+once $ s "can" >| n (run 8)

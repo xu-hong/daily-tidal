@@ -1,0 +1,153 @@
+d1  $ s "bd? bd? bd? bd? bd? bd? bd? bd?"
+
+d1 $ s "bd!3 cp!2"
+
+d1 $ s "bd!! cp!"
+
+d1 $ s "bd!!! cp!! [bd!! cp!]"
+
+d1 $ (+ n "10 -10") $ s "peri ~ ~ peri ~ ~ peri bd"
+
+d1 $ s "bd@3 cp@3 bd bd"
+
+d1 $ s "bd bd [s b peri:3]/3 cp"
+
+d1 $ s "[bd cp]!!! s!!!"
+
+d1 $ s "bd*4 s*4"
+
+d1 $ s "bd bd <s b peri:3> cp"
+
+d1 $ s "~ [~ tabla2*3]"
+
+d1 $ s "~ [~ [tabla2 tabla2 tabla2] ]"
+
+d1 $ s "~ [~ tabla2!3]"
+
+d1 $ s "~ [~ tabla2 tabla2 tabla2]"
+
+setcps 0.5
+
+d1 $ s "[peri!2 doru!3] fk!16 [b cp]!4" # n (run 10) # legato 1
+
+d1 $ s "peri*4" # speed "1 2 3 4"
+
+d1 $ ccv "0 127 50!3 30*2" # ccn 20 # s "midi"
+
+d1 $ sound "bd*4" # speed (range 1 3 $ cF 1 "1")
+
+
+d1 $ s "ahh(3,8)" # legato (range 0.25 1 $ slow 3 rand)
+
+d1 $ s "hour" # legato 1 # begin 0.4
+
+hush
+
+d1 $ s "ringsurfing" # legato 1 # begin 0.5
+
+d1 $ fast (segment (1/3) $ choose [1,3,3,3,5]) $ s "arpy*4" # n "[0 2] [3 8 6] 3 1@3"
+   # (pan $ range 0 1 $ tri)
+
+d1 $ sound "bd*8" # speed "<1 2 0.5 3>" |* speed "1 2 3 4"
+
+d2 $ sound "cp*4 ~ bd! ~ sd " # (gain $ range 0 1 $ sine)
+
+hush
+
+d1 $ sound "cp*2"
+
+d1 $ rotR 0.5 $ s "cp*2"
+
+-- equivalent
+d1 $ ("0.5" ~>) $ sound "cp*2"
+
+d2 $ ("1s" ~>) $ sound "cp*2"
+
+d1 $ s "bd" # speed "2 3"
+
+d1 $ s "bd*8" # speed (choose [1,2,3,4])
+
+d1 $ s "arpy*8" # speed "[1 , 2 3]"
+
+d1 $ s "bd*16" # gain (range 1 2 $ slow 2 $ tri)
+
+d1 $ n (slow 2 $ segment 16 $ range 0 32 $ sine) # sound "amencutup"
+
+d1 $ s "sn*8" # gain (range 0 1 $ "1 3 5 10") # (range 0 1 $ pan "1 3 5 10")
+
+hush
+
+-- rotL Useful when building and testing out longer sequences.
+-- this will skip to 4th cycle directly.
+do
+{
+  resetCycles;
+  d1 $ rotL 4 $ seqP [
+    (0, 12, sound "bd bd*2"),
+    (4, 12, sound "hh*2 [sn cp] cp future*4"),
+    (8, 12, sound (samples "arpy*8" (run 16)))
+  ]
+}
+
+-- segment: segment 'samples' the pattern at a rate of n events per cycle.
+-- Useful for turning a continuous pattern into a discrete one
+d1 $ n (segment (1/4) $ range 0 32 $ sine) # sound "amencutup"
+d1 $ n (segment 4 $ range 0 32 $ sine) # sound "amencutup"
+
+d1 $ s "feel*8" # speed (segment 8 $ range 0 32 $ tri)
+
+hush
+
+
+
+do
+  let seg = (1/4)
+      period = slow (segment seg $ choose [1,2,3,4,5])
+  d1
+    $ pan "0.5*16" -- create a pattern
+    # s (period $ (segment seg
+      $ choose ["bd", "cp", "peri:2", "doru:1"]))
+      # gain (range 0 1 $ period $ tri)
+
+do
+  let pat = (
+          every 2 (|* 1.5) $
+            every 3 (|+ 1) $
+            "1 3 2 4 1.5 3"
+        ) :: Pattern Double
+  d1 $ s "bd*8"
+    # speed pat
+    # gain (range 0 1 $ pat)
+    # (range 0 1 $ pan pat)
+
+d1 $ s "bd*8" # speed (bite 4 "<0 1 2 3>" $ "1 2 3 4 5")
+
+hush
+
+let bpm160 = (160/240)
+    bpm170 = (170/240)
+
+d1 $ s "bd*8" # cps bpm170
+
+d1
+  $ speed (  "{1@7 4@5 1@10 3@3 2@3 1? 4@7}%<16 8>")
+  # s "k:1"
+
+do
+  let pat1 = (s "k(<11 13 9>,16,<0 3 5>)" # n "[3 5 1 7]")
+      pat2 = (s "peri*8?" # n (every 2 rev $ run 10) )
+      pat3 = (s "[tite peri]*8?" # n (every 3 rev $ run 7))
+      pat4 = stack [s "ahh(3,8)" # legato 1, s "k:7*16?"]
+      pat5 = cat [ pat1, stack [pat2, pat4], pat3]
+      pat6 = cat [pat2, stack [pat3, pat4], pat4, pat1]
+  d1 $ cat [pat5, pat6] # cps (180/240)
+
+d1
+  $ every 2 rev
+  $ struct (binaryN 16 "<283942234  234232 337711>")
+  $ s "k:1"
+
+hush
+
+
+binaryN 16 "283942234"

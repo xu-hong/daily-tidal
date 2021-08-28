@@ -1,0 +1,172 @@
+--- drum pattern
+--- taken from  https://club.tidalcycles.org/t/260-drum-machine-patterns/2921/2
+
+do
+  setI "i" $ 0    -- i = hihat
+  setI "s" $ 10   -- s = snare
+  setI "k" $ 4    -- k = kick
+  setS "f" $ "ab" -- f = kit or folder
+
+do
+  setI "i" $ 2
+  setI "s" $ 1
+  setI "k" $ 0
+  setS "f" $ "drum"
+
+do
+  setI "i" $ 5 -- 5, 28
+  setI "s" $ 2  -- 2, 20, 22, 23
+  setI "k" $ 13
+  setS "f" $ "gretsch"
+
+setcps (150/60/4)
+
+d1 $ stack [
+   (slow 2 $ n "^i ~ ^i ~   ^i ~ ^i ^i   ^i ~ ^i ~   ^i ~ ^i ~   ^i ~ ^i ~   ^i ~ ^i ~   ^i ~ ^i ~   ^i ~ ^i ~ " # s "^f"),
+   (slow 2 $ n "~ ~ ~ ~   ^s ~ ~ ~   ~ ^s ~ ~   ~ ~ ^s ~   ~ ~ ~ ~   ~ ~ ^s ~  ~ ^s ~ ~  ^s ~ ~ ~ " # s "^f"),
+   (slow 2 $ n "^k ~ ~ ~   ~ ~ ~ ~   ~ ~ ^k ~   ~ ~ ~ ~  ~ ~ ^k ~   ~ ~ ~ ~   ~ ~ ^k ~   ~ ~ ~ ~ " # s "^f")
+]
+
+-- or, with some additional randomization and short syntax
+-- (which makes it much more dense to understand)
+
+d1 $ stack [
+   (n "[^i ~ ^i ~]*4" # s "^f"),
+   (n "<~!4   ^s ~!3   ~!4   ^s ~!3 . ~!4   ~ ~ ^s ~   ~!4   ^s ~ ~ ~ >" # gain "1" # s "^f"),
+   (n "<~ ~ ^s ~   ~ ~ ~ ~   ^s ~ ~ [^s ^s]   ~ ~ ^s ^s . ~ ~ ~ ~   ^s ~ ~ ~   ~ ~ ^s ~   ~ ~ ~ ~ >" # gain (range 0.35 0.75 rand) # s "^f"),
+   (n "<^k ~!3   ~ ~ ^k ~   ~ ~ ^k ~   ~!4 . ~ ~ ^k ~   ~!4   ^k ~!3 ~!4>" # s "^f")
+]
+
+hush
+
+------------------
+-- hihat strategy
+----------------------------------
+-- start with simple&effective foundation: [kick!4, ~ clap ~ clap]
+-- hh sound design trick: release max, with sustain = 0, now just use decay
+------ add lfo: use offset to find sweet spot, add delay for pumping/swinging
+------ pitch shift is your friend
+------ random pan can be fun too
+------ filter out low f, normally
+-- 16 th note rolling hihat
+-- ride cymbal: every 8th on the upbeat, hpf
+-- jacking: oh and ch near each other, ch cut off by oh
+----- `co` in tidalcycles
+--------- e.g open hats are upbeat, and add closed hat swing
+-- < 5000 hertz "grey" "dark" sound; > 5000 hz zss zss zsss "bright"
+------- tweak these to give different feels
+--  reverb: room, wetness (i.e. effectiveness), less is more
+------ it will add low frequencies, so remove it
+
+setcps (135/60/4)
+
+p "s" $ gain 0
+
+d2
+  $ stack [
+  -- foundation kick clap
+  s "goldbd!4" # gain 1 # lpf 300,
+  s "~ clap:7 ~ clap:7" # gain 0.8,
+  stack [
+    -- ride cymbal, every 8th on the upbeat
+    s "[~ 808cy]!4" # hpf 800
+      -- swing a little bit too
+      # release (range 0.3 0.7 sine),
+    -- choking pattern with a little swing
+    -- technically this is not(?) what the video says but I find this works too
+    swingBy 0.01 4 $ s "[~ co:3]!4" # gain 1.2,
+    s "linnhats*16"
+      -- shape
+      # rel 0.4 # sus 0.1 # decay 1
+      -- LFO swing this, can map to gain/release/whatever
+      # gain (slow 4 $ range 1 1.2 sine)
+      -- random pitch swing and pan
+      # (every 2 (# speed (rand + 0.5)) $ every 3 (# pan rand) $ n "0")
+  ] -- reverb
+  # room 0.3 # size 0.3 # dry 0.7 # orbit 4 # hpf 1000
+  ]
+
+
+hush
+
+d1 $ s "co:3"
+
+
+--
+
+
+----------------------
+----------------------
+-- techno drum design
+----
+
+setcps (133/60/4)
+
+
+d2 $ slow 4 $ n (run 30) # s "808bd"
+
+d2 $ s "bassdm ~ bassdm ~" # n "<3 4 5 6 7 8 9 10>"
+
+
+--- a simple drum kick sound
+d2
+ $ fast 2
+ $ swingBy (1/3) 4
+ $ n "3 ~ 3 ~"
+ # sound "808bd"
+ # legato 1
+ # sustain 3
+ # decay 1
+ # release 8
+ # room 0.1
+ # sz 0.5
+ # lpf 3000
+ # smear 0.2 -- i like it! -- try krush too
+ # shape 0.8
+
+-- another
+-- works great around cps 135
+d2 $ fast 2 $ swingBy 0.01 4
+  $ stack [
+  ( -- add rumble with off, there are low and high
+    off (17/1000) (# room 0.1)
+    $ off (10/1000) (+7) $ (# crush 8)
+    $ s "super808 ~ super808 ~"
+    # n 0.9 -- synth arg
+    # rate 2 -- synth arg
+    # legato 1
+    # att (5/1000)
+    # room 0.5
+    # size 0.3
+    # sustain 0.5 -- effect: sus > release > decay
+    # decay 1.5
+    # release 1
+    # lpf 3800
+    # lpq 0.1
+    # hpf 100
+    # hpq 0.08
+    # smear 0.1
+  ),
+  (s "~ superhat:12 ~ superhat:12" # hpf 300 # lpf 12000 # room 0.1) -- KISS
+]
+
+d1 $ fast 2 $ swingBy (1/5) 4 $ s "~ superhat:12 ~ superhat:12" # hpf 300 # lpf 16000 # room 0.1
+
+hush
+
+--- a foley sound
+d2 $ s "foley ~ foley ~" # n "<0 1 2 3 4 5 6 7 8 9 10>" # legato 1
+
+d2 $ s "pluck ~ pluck ~ " # n "<0 1 2 3 4 5 6 7 8 9 10>" # legato 1
+
+-- foley track
+-- add accents. do not synchopate. emphasize on the strong beat
+
+-- hh
+-- make it fresh and clear. so that we know the rest is intentional
+-- highhat that plays on the upbeat: very techno!
+hush
+
+--- a techno drum group
+-- kick, foley, hihat
+hush

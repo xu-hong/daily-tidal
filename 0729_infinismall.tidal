@@ -1,0 +1,67 @@
+let deco = off 0.015625 (# squiz 4)
+
+
+
+let hip = within (0.125, 0.5625) (stutWith 2 (-1/64) (|* gain 1.9))
+
+
+--- this is pretty
+d1
+$ degradeBy 0.3
+-- $ deco
+-- $ off (choose [0.015625, 0.03125, 0.125]) (# crush 2)
+-- $ superimpose ghost
+-- $ rarely (shift 0.03125)
+$ spread ($) [ghost, ghost, party]
+-- $ swingy''
+$ n "f(5,8) <af af cf6>(3,8)" # s "abd" |+ "<7 0>"
+
+m1
+m2
+m3
+
+
+d2 $ swingy $ s "[bd1200!4, ~ dripcp ~ dripcp]"
+
+d3 $ s "chaoscp!16?" # gain 0.8 # n 2
+
+d4 $ sometimes (shuffle 16) $ chop 64 $ s "drone" # gain 0.6 # cut 123 # lpf 1000
+
+
+d1
+   $ hip
+   $ sound "bd*2 sn lt mt hh hh hh hh"
+
+
+m1
+
+d1 $ accident
+$ deco
+$ s "kalimba"
+>| cat [
+n "c'maj e'minor7 a'minor e'minor7",
+n "f'maj e'major a'minor e'minor7",
+n "f'maj g'maj e'minor7 a'major",
+n "f'maj g'maj c'maj ~"
+]
+|+ n 7
+# room 0.3 # sz 0.3 # legato 1
+# gain 1.2
+
+let
+m1= d1 silence
+m2 = d2 silence
+m3 = d3 silence
+m4 = d4 silence
+m5 = d5 silence
+m6 = d6 silence
+m7 = d7 silence
+m8 = d8 silence
+m9 = d9 silence
+m10 = d10 silence
+
+swingy = swingBy 0.0156125 8
+swingy' = swingBy 0.0156125 4
+swingy'' = swingBy 0.0156125 2
+
+accident = rarely (shift 0.03125)

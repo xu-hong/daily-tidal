@@ -1,0 +1,54 @@
+--- different time signatures
+--- 3/4 vs 6/8
+-- https://www.attackmagazine.com/technique/passing-notes/bored-of-44-other-time-signatures-in-dance-music/3/
+
+d1 $ fast 2 $ cat [
+  stack [
+  struct "1 0 1 0 1 0" $ s "bd1200",
+  struct "0 0 1 0 1 0" $ s "909cp",
+  struct "1 0 0 0 0 0" $ s "arpy" # note "c3"
+  ]
+  , stack [
+  struct "1 0 1 0 1 0" $ s "bd1200",
+  struct "0 1 0 1 0 1" $ s "909ho",
+  struct "0 0 1 0 1 0" $ s "909cp",
+  struct "1 0 0 0 0 0" $ s "arpy" # note "c3"
+  ]
+]
+
+d1 $ fast 2 $ cat [
+  stack [
+  struct "1 0 0 1 0 0" $ s "bd1200",
+  struct "0 1 1 0 1 1" $ s "linnhats",
+  struct "1 0 0 0 0 0" $ s "arpy" # note "g2",
+  struct "0 0 0 1 0 0" $ s "909sn"
+  ]
+  -- same!
+  , stack [
+  struct "1 0 0 1 0 0" $ s "bd1200",
+  struct "0 1 1 0 1 1" $ s "linnhats",
+  struct "1 0 0 0 0 0" $ s "arpy" # note "g2",
+  struct "0 0 0 1 0 0" $ s "909sn"
+  ]
+]
+
+
+--- polyrhythm
+-- - we can hear how a hi-hat rhythm in 6/8 can aff
+-- ect the feel of the piece in 4/4:
+-- https://www.attackmagazine.com/technique/passing-notes/polyrhythms/
+
+
+d1 $ stack [
+  -- 4/4
+  stack [
+  struct "1 0 1 0 1 0 1 0" $ s "bd1200",
+  struct "0 1 0 0 0 1 0 0" $ s "ab",
+  off 0.25 (|+ n "12") $ s "fmr1*4" # note "df3 <a3 g3>"
+  ]
+  -- 6/8
+  , fast 2 $ stack [
+  struct "1 1 1 1 1 1" $ s "linnhats",
+  struct "1 0 0 1 0 0" $ s "arpy" # note "g2"
+  ]
+]

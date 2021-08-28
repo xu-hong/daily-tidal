@@ -1,0 +1,67 @@
+{-|
+Static example code of a live-coded performance of Warm Waves
+for ODD7 live-coding compilation release (summer 2015).
+Performed on 2015-04-24 by Kindohm (a.k.a. Mike Hodnick)
+-}
+
+
+-- midi setup
+import Sound.Tidal.Output
+import Sound.Tidal.VolcaKeys
+keyStreams <- keyproxy 1 4 keys [1]
+[vk] <- sequence keyStreams
+
+-- super special functions. thx to David Ogborn for the "up" function
+let rip a b p = within (0.25, 0.75) (slow 2 . rev . stut 8 a b) p
+let rip' a b c d e p = within (a, b) (slow 2 . rev . stut c d e) p
+let up = speed . ((1.059466**) <$>)
+
+-- prestissimo!
+-- okay it's more of a half-time feel, so andante moderato
+bps (200/120)
+
+-- volca keys synth, live-coded MIDI
+vk $ slow 3 $ note "32 [~ 55/2] ~ 44/3"
+    |+| voice "0.5"
+    |+| kcutoff "0.4"
+    |+| lfocutoffint "0.4"
+    |+| vcfegint "0.5"
+    |+| decay "1"
+    |+| detune "0.1"
+    |+| sustain "0"
+    |+| dur "0.05"
+
+-- dirt sample synth
+d1 $
+    slowspread ($) [ -- organized chaos starts here
+        id,
+        rev,
+        (|+| coarse "16 32 64"),
+        (|+| speed "1.5 1.2 -1.2 0.8"),
+        rip 0.2 0.1,
+        id,
+        (|+| speed "0.5") . slow 2,
+        rip' 0 1 8 0.2 0.1, (|+| unit "c")] $
+    foldEvery [3,4] (0.25 <~) $ -- organized chaos ends here
+    stack [
+        sound "{mt*2 mt ~ ~ ~}%4", -- tom
+        every 5 (|+| vowel "o u i") $ whenmod 5 3 (jux (iter 4)) $ -- kicks
+        every 3 (density 2) $ slow 2 $ sound "k [~ k] [bt/4 k] k*4?"
+            |+| cut "1",
+        sound "~ cp" |+| speed "2", -- lite cp
+        every 3 (|+| coarse "16") $ sound "~ ch*4 oh/4 ~" -- hats
+            |+| cut "10",
+        sound "vbs*4 vbs*8" -- snares
+            |+| cut "3"
+            |+| begin "-1"
+            |+| loop "{10 8 16 12 16 5 7}%4"
+            |+| end "{0.1 0.5 0.2 0.7 0.3}%4"
+            |+| gain "0.9",
+        every 4 (|+| delay "0.4") $ foldEvery [2,3,4] (density 2) $ -- moar hats
+            every 3 (density 2) $ sound "hh*16"
+                |+| gain "0.8"
+                |+| cutoff (scale 0.01 0.1 $ slow 3.1 sine1)
+                |+| resonance "0.2",
+        slow 2 $ sound "~ cpr/2" -- reverb clap
+        ]
+    |+| delayfeedback "0.5" |+| delaytime "0.45"

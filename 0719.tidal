@@ -1,0 +1,19 @@
+d1 $ stack [
+  struct "1 0 0 0  1 0 0 0  1 0 0 0  1 0 0 0" $ s "bd1200"
+   # delay 0.4 # delaytime 0.02 # delayfb 0.5 # gain 1.2,
+  -- s "[~ 909cp:4]!2" # gain 0.9,
+  -- s "[~ awride:2]!4" # gain 0.8, -- awride:2
+  -- struct "0 0 1? 0   0 0 1 0  0 0 1? 0  0 1 1 1" $ s "909ho:5",
+  struct "0 0 1? 1?  0 0 1? 0  0 0 0 0  0 0 1? 0" $ s "industrial:2"
+] -- # room 0.1 # size 0.3 -- # hpf 30
+
+d1 silence
+
+
+d2 $ off "e" (|+ n "<12 12 12 12 12 5>") -- $ off 0.25 (|+ n "7")
+$ n "af ef bf g" # s "superpiano" # gain 0.8
+
+d2 silence
+
+d3 $ rarely (|-| n "3 5")
+$ n "~ af'phrygian ~ bf'min" # s "padmh" # legato 2 # gain 0.8

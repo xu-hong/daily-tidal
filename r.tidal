@@ -1,0 +1,81 @@
+-- synth --
+superpiano
+supersaw -- better with lpf
+-- superhammond is a good organ synth
+-- supermandolin sounds more like a harpsichord when you put the sustain >2
+-- super808 sounds like an 808 synth, but be careful to not put the notes above 8 or it will get loud and shrill
+-- supercomparator gives a really distinctive artificial crunchy synth sound
+-- superreese is similar to supercomparator in how I’d use them
+-- soskick is a good heavy, artificial sounding, drum synth
+-- superchip sounds like old chiptune instruments
+-- supernoise is a good noise generator that’s good for percussion and rumbles
+acid
+bday
+dsynth
+rash
+fmr1
+cs
+cp1 -- grainy piano
+harp1
+kalimba
+abd
+steeld
+xyl
+string
+violin
+string2
+pad1
+pad2
+pad3
+saws
+line
+padmh
+
+-- drum --
+"808" "808bd" "808cy" "808ht" "808lc" "808lt" "808oh" "808sd"
+909cp 909cy 909hc 909ho 909kick 909loop 909rim 909sn 909tom
+awcy awhc awho awperc awride awsn awstomp awtom awtrap
+bd1200
+bsbass bsguitar bshihat bskick bsnoise bsperc bssnare bsvocals
+chaoscp chaoskick chaosloop chaosperc chaossn
+drip808 dripcp dripcrash driphc dripho dripkick dripperc dripride dripsn
+goldbd goldbdl goldconga goldcp goldhh goldperc goldsd goldtom
+oldhh oldperc oldkick oldsn
+cpu cpu2
+"ab" "auto" "bassdm" "bd"
+"db"
+"dr2" "feel" "hc"
+"hh27" "ho" "kicklinn!4" "linnhats" "lt" "ht"
+"dbass"
+"cb"
+"dr55" "east" "future" "hardcore"
+"house"
+"sh:3"
+
+d1 $ stack [
+  struct "t f f t f f t f" $ s "cpu2",
+  struct "t f f t f f t f" $ s "<cb east:1>",
+  struct "t f f t f f f f" $ s "dbass" # n "<0 1 5 7>",
+  fast 2 $ struct "f f t t f f t f" $ s "dr2"
+] # gain 1.2
+
+
+-- effects --
+chin bass bass1 gab gabba lighter
+bleep bottle can clak coins glasstap
+industrial
+foley footsteps
+claus
+
+-- longish --
+drone frozen bang pegio lunar urban vinyl
+
+-- melodic --
+arpy blip  jvbass
+
+d1 $ s "cs" >| n "0 1 2 3 4"
+
+d1 $ off 0.25 (|+ n "<3 7>")
+  $ off 0.125 (|- n 12)
+  $ n "a'minor g'major f'major ~"
+  # s "cs" # gain 0.8 # sus 0.6 # rel 1

@@ -1,0 +1,38 @@
+
+
+--- blues beats
+d1 $ stack [
+struct "1010 0110 1010" $ s "goldbd",
+struct "0001 0000 0101" $ s "goldsd",
+struct "1011 0110 1111" $ s "goldhh"
+] # gain 1 # room 0.1
+
+
+d2 $ degrade $ fast 2 $ s "chin!8" # gain (range 0.8 2.5 sine)
+
+
+d3
+$ rumble
+$ every 4 (|+ n "12")
+$ off 0.13 (|+ n 7)
+$ n (invnote' 7 "ds(5,8) b(3,8)") # s "bday"
+# gain (slow 4 $ range 0.8 1 sine)
+
+m3
+
+
+
+d4
+$ accident
+$ often (# vowel "<a o e>")
+$ slow 3
+$ n "<as4 gs4 b4*12> ~ ~"
+# s "<supersaw rash rash>"
+# lpf 1000 # lpq 0.2
+# room 0.1 # sz 0.3
+# sus 2
+# gain 1
+
+d5 $ n "cs3" # s "supercomparator"
+# gain (slow 4 $ range 1 1.2 sine)
+# legato 2

@@ -1,0 +1,125 @@
+-- LEAD
+-- build up
+d1 -- $ every 3 (|+| speed "1 2")
+$ superimpose (chop 3)
+$ every 3 (# crush 8)
+-- $ slow 4
+$ s "bass1" # octersub 0.5
+-- # delay 0.5 # delaytime 10 # delayfb 0.2
+
+
+d1 $ every 2 (|+| speed "2")
+$ chop "<3 8>"
+$ s "bass1" # octersub 0.5 # delay 1 # delayfb 0.5
+# lpf (range 100 500 sine+rand) # lpq 0.1
+# gain 0.8
+
+d1 silence
+
+hush
+
+d2 $ slow 4 $ s "foley:201"
+# room 0.3 # sz 0.3
+--209, 201, 202, 175, 170, 112, 110, 23, 5, 3, 15, 198
+
+d4 $ slow 2 $ s "~ ~ can:2" # gain 2
+
+d3 $ slow 8 $ note "c" # s "dsynth"
+ # lpf 1000 # delay 0.2 # delaytime 200 # delayfb 0.1
+ # att 1 # sus 10 # rel 100
+
+d3 silence
+
+hush
+
+setcps(135/60/4)
+
+--- melody
+d1 -- $ swingBy 0.125 4
+   $ sometimes (jux (# speed 2))
+   $ rarely (# crush "[3|6]")
+   $ every 3 (|+ note "7")
+   $ note "<ef af g>/2" # s "superhammond"
+   # sus 5 # rel 5
+   # lpf 2000
+
+hush
+
+scaleList
+
+
+---- blue mess rectangle mess
+d1 $ slow 2
+ $ every 2 (# crush "8")
+ $ off 0.25 (jux rev)
+ $ stack [
+ -- arp "thumbup" $ n "c'sus4'5" # s "superpiano" # sus 2,
+-- n (scale "phrygian" "0 [1 <3 3 10>] <5 7>*2") # s "superpiano" # sus 2 # gain 0.1,
+-- n (scale "phrygian" "~ <14 7 5 1>") # s "superpiano" # sus 2 # room 0.4,
+-- n (scale "phrygian" "~ 1*2") # s "superpiano" # sus 2 # att 0.4 # gain 0.01 # lpf 2000,
+-- slow 2 $ n (scale "phrygian" "~ <3 1>") # s "superpiano" # sus 2 # gain 0.1 # (every 3 (|+ note "<-1 12>") $ n 0),
+n (scale "phrygian" "<3 5 4 3>") # s "supermandolin" # sus 5 # rel 2 # gain 2 # lpf 400
+] # delay 0.1 # delaytime 100 # delayfb 0.3 # gain 1
+
+hush
+
+
+---
+
+d1 $ sometimes (|+ note "0 7")
+   $ scramble 32
+   $ chop 4
+   -- $ iter 16
+   $ off (1/3) (jux rev)
+   $ every 4 (# crush 3)
+   $ s "supermandolin"
+   # note "<5 5 7 8>" # sus 5 # rel 2 # gain 0.7 # lpf 1000
+   # pan (range 0 1 saw)
+
+d2 $ every 3 ((hurry 2) . (# crush 3)) $ s "bass1" # gain 0.5
+
+hush
+
+---- study
+-- delay + stut for all the grooooooves
+-- keep a cleaner tone with an extra channel untouched
+---- here : snare in d3
+---- generally the process is:
+------ basic beats, add delay, add distortion
+------ the idea is to reach a rich, wide range
+--- think audio sculpture
+
+d2 -- $ swingBy (1/8) 4
+   $ fast 2
+   $ jux (# speed 2)
+   $ superimpose (stut 6 0.4 0.01) -- . (# vowel "e")
+   $ superimpose (# lpf (range 800 1200 sine)) . (# crush "6") . (# delay 0.1) . (# delaytime 0.1) . (# delayfb 0.3)
+   $ superimpose (|+ note "< 3 7 >")
+   $ s "[909kick:2 ~ ~ 909kick:2 ~ ~ chaosperc:1 ~]"
+
+d3 $ fast 2 $ s "~!6 909sn:7 ~"
+
+-----
+--- cool vocal
+----- swith between english and german
+----- about corona
+
+----
+d5 -- $ degradeBy 0.4
+   $ every 3 (# crush 3)
+   $ slow 16 $ scramble 16 $ chop 16 $ s "urban"
+   # n "<0 1>"
+
+---------------
+--- this is somewhat spring-y
+d1 $ off "2f" (|+ note "<7 12 -5>")
+   $ n (slow 2 "c(5,8) e(3,8) f*2 e")
+   # s "supermandolin" # legato 1 # gain 0.5
+
+d1 silence
+
+d2 $ s "909sn:1 909hc ~ 909hc" # n "0 2"
+
+
+d3 $ sometimes (|+ n "<12 7>") 
+   $ n "c'major" # s "supermandolin" # sus 10

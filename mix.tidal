@@ -1,0 +1,70 @@
+setcps (133/60/4)
+
+
+d2 $ slow 4 $ n (run 30) # s "808bd"
+
+d2 $ s "bassdm ~ bassdm ~" # n "<3 4 5 6 7 8 9 10>"
+
+
+--- a simple drum kick sound
+d2
+ $ fast 2
+ $ swingBy (1/3) 4
+ $ n "3 ~ 3 ~"
+ # sound "808bd"
+ # legato 1
+ # sustain 3
+ # decay 1
+ # release 8
+ # room 0.1
+ # sz 0.5
+ # lpf 3000
+ # smear 0.2 -- i like it! -- try krush too
+ # shape 0.8
+
+-- another
+-- works great around cps 135
+d2 $ fast 2 $ swingBy 0.01 4
+  $ stack [
+  ( -- add rumble with off, there are low and high
+    off (17/1000) (# room 0.1)
+    $ off (10/1000) (+7) $ (# crush 8)
+    $ s "super808 ~ super808 ~"
+    # n 0.9
+    # rate 2
+    # legato 1
+    # att (5/1000)
+    # room 0.5
+    # size 0.3
+    # sustain 0.5 -- effect: sus > release > decay
+    # decay 1.5
+    # release 1
+    # lpf 3800
+    # lpq 0.1
+    # hpf 100
+    # hpq 0.08
+    # smear 0.1
+  ),
+  (s "~ superhat:12 ~ superhat:12" # hpf 300 # lpf 12000 # room 0.1) -- KISS
+]
+
+d1 $ fast 2 $ swingBy (1/5) 4 $ s "~ superhat:12 ~ superhat:12" # hpf 300 # lpf 16000 # room 0.1
+
+hush
+
+--- a foley sound
+d2 $ s "foley ~ foley ~" # n "<0 1 2 3 4 5 6 7 8 9 10>" # legato 1
+
+d2 $ s "pluck ~ pluck ~ " # n "<0 1 2 3 4 5 6 7 8 9 10>" # legato 1
+
+-- foley track
+-- add accents. do not synchopate. emphasize on the strong beat
+
+-- hh
+-- make it fresh and clear. so that we know the rest is intentional
+-- highhat that plays on the upbeat: very techno!
+hush
+
+--- a techno drum group
+-- kick, foley, hihat
+hush

@@ -1,0 +1,71 @@
+--- study scales
+
+-- C Ionian
+-- chords
+d1 $ slow 2 $ n "c'maj d'min e'min f'maj g'maj a'min b'dim c6'maj"
+   # s "superpiano"
+
+d2 $ slow 2 $ n "c4 f4 g4 b4" # s "pad1"
+d2 silence
+
+--- Aeolian
+-- say E minor
+d1 $ slow 2 $ n "e'min fs'dim g'maj a'min b'min c'maj d'maj"
+   # s "padmh"
+
+-- signature notes: g3, d4
+d1
+-- $ jux rev
+$ off 0.125 (|+ n "<7 12>")
+-- $ sometimes (|+| note "<12 0, 19 0, 5 0>")
+$ rarely (# crush 8)
+$ cat [
+-- n "<a3 d4 d4 g4>(3,8)"
+n "<a3 f3 c4 g3>(3,8)" --phrygian
+] # s "pad1" # sus 1 # gain 1.5
+
+d3 -- $ superimpose ghost
+$ stack [
+struct "1 1 1 1? 1 1 1? 1? 1 1? 1 1? 1 1 1? 1?" $ s "superchip" # gain 0.5,
+struct "1 0 0 0  0 0 0 1  0 0 0 0  1 0 0 0" $ s "bd1200",
+struct "0 0 0 0  1 0 0 0  0 0 0 0  0 0 0 0" $ s "909sn:7" # gain 0.8
+] # gain 1.5
+
+d3 silence
+
+-- e.g ghost
+d4 $ stack [
+ ghost $ sound "~ 909tom:2/4",
+ sound "goldbd*4" ]
+
+d4 silence
+
+--- 6th chord tends to give some sort of expection
+-- aka c'major or c'major7
+
+d2 $ slow 4 $ cat [
+n "a3'minor e3'minor g3'maj d4'maj",
+n "a3'minor c4'major7 g3'maj d4'maj"
+] # s "padmh" # sus 3 # rel 5 # lpf 500
+# delay 0.4 # delaytime 0.1
+
+d2 silence
+
+d2 $ slow 4 $ cat [
+n "g4 c5 a4 d5"
+] # s "superpiano" # sus 3 # rel 10 # lpf 500
+# delay 0.4 # delaytime 0.1
+# gain 1.2
+
+
+--- some fun with scales and waveforms
+d1 -- $ off "e" (|+ n 12)
+  $ struct "t(<9 7>,16)"
+  $ n (scale "mixolydian"
+      $ floor <$> (
+          -- range "<0 -7 5>" "<3 -2 7 -9>"
+          (slow 2 sine + cosine) * "<7 3>" -- add waveforms gives surprises
+        ) |+ "<0 -5 -3>"
+        )
+  # s "supersaw" # lpf (fast 2 $ range 500 1400 saw)
+  # lpq 0.1 # legato 0.5

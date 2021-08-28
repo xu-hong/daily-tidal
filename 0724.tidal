@@ -1,0 +1,103 @@
+-- use struct to give structure
+d1 -- $ off "e" (|+ n 12)
+  $ struct "t(<9 7>,16)"
+  $ n (scale "phrygian"
+      $ floor <$> (
+          -- range "<0 -7 5>" "<3 -2 7 -9>"
+          (slow 2 sine + cosine) * "<6 -3>" -- add waveforms gives surprises
+        ) |+ "<0 -5 3>"
+        )
+  # s "supersaw" # lpf (fast 2 $ range 500 1400 saw)
+  # lpq 0.1 # legato 0.5
+
+
+  scaleList
+
+  d1 -- $ off "e" (|+ n 12)
+    $ fast 2 $ struct "t(7,8,<0 1 2 5>)"
+    $ n (scale "harmonicMinor" -- one of the jazzy scales, among Aeolian and Dorian
+        $ irand "<8 22>")
+    # s "superpiano" # lpf (fast 2 $ range 500 1400 saw)
+    # lpq 0.1 # legato 1
+
+
+d1 -- $ off "e" (|+ n 12)
+  $ fast 2 $ struct "t? t? t? t? t? t? t? t?"
+  $ n (scale "<harmonicMinor>"
+      $ floor <$> ("<6 6 13>" * cosine + 6 * rand))
+  # s "superpiano" # lpf 1200
+  # lpq 0.1 # legato 1
+
+d1
+$ struct "t(3,8)"
+-- arposc sc sg upper wave = scale sc (stepr' sg 0 upper wave)
+-- $ n (scale "minor" (roundy $ (segment 16 (range 0 10 sine))))
+$ n (invnote $ arposc "minor" 16 10 sine)
+# s "superpiano"
+|+ n 12
+
+
+:t invnote
+
+--- some work --
+
+d2 $ sometimes (# crush 8)
+$ off 0.125 (|+ n "<12 7 7 7>")
+$ s "bday"
+>| n ( --invnote' "<14 9>" $
+  scale "minor"
+  $ "{4 [6 6] 0 [2 ~], 5 5 5}"
+  ) |+ n 9
+# gain 0.8
+
+d2 silence
+
+d3 $ stack [
+every 3 (bite 8 $ segment 64 $ irand 8) $ s "chin(5,8)" # gain 2,
+degradeBy 0.8 $
+chunk 8 (hurry 2) $ chop 16 $ s "bang:3" # pan rand --- first frozen 1, then bang
+] # room 0.1 # size 0.2 # gain 0.5
+
+d4 $ stack [
+struct "1 0 0 1 0 0 0 1" $ s "goldbd" # gain 1.5,
+struct "0 0 0 1 0 1? 1 0" $ s "goldcp:5"  # legato 1
+-- struct "1*16" $ s "goldhh" # gain 0.8
+] # room 0.2 # sz 0.3 # gain 0.8 -- # lpf 1400 # lpq 0.1
+
+
+
+d5 -- $ sometimes (|+ n "12 0")
+$ almostNever (slice 4 "3(3,8) [1 0] ~ 2(5,8)")
+$ s "superpiano"
+# n "{a3'minor c4'major f4'major7 e4'minor}%5"
+# gain 1 # sus 3
+# delay 0.5 # delayfb 0.3 # delaytime 0.1
+
+d5 silence
+
+-- end with this
+d6 $ fast 2 $ arp "converge" $ n "a4'minor'7" # s "bday"
+
+d6 silence
+
+solo 2
+
+d2 $ sometimes (# crush 8)
+$ off 0.125 (|+ n 7)
+$ s "bday" >| n (scale "minor"
+  $ "{4 [6 6] 0 [2 ~], 5 5 5}"
+  ) |+ n 2
+# gain 1.2
+
+d2 silence
+
+d3 $ s "supersaw" >| n (inverse 0 [0..12])
+# lpf 1000
+
+d3 silence
+
+
+
+inverse base p = listToPat $ map (\x -> x - (base - x)) p
+
+inverse 5 [0..12]

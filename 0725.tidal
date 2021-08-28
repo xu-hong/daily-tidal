@@ -1,0 +1,37 @@
+-- xia yu tian ukelele
+d1 $ slow 4 $ s "kalimba"
+>| cat [
+n "c'maj e'minor7 a'minor e'minor7",
+n "f'maj e'major a'minor e'minor7",
+n "f'maj g'maj e'minor7 a'major",
+n "f'maj g'maj c'maj ~"
+]
+|+ n 7
+# room 0.3 # sz 0.3 # legato 1
+# gain 1.2
+
+
+d1 silence
+
+d2 $ stack [
+struct "0 1 0 1" $ s "bd1200",
+-- struct "0 0 0 1? 0 1? 1 1" $ s "chaoscp",
+struct "1!16" $ s "chin" # gain 1.7 --- or hh
+-- slice 16 (segment 8 $ irand 16) $ s "drone" # lpq 1000
+]
+
+
+d3 $ degradeBy 0.9
+$ plydown 4 0.7
+$ chunk 4 (hurry 3)
+$ jux rev
+$ sometimes (# vowel "<a o>")
+$ sometimes (# crush 4)
+$ struct "t(5,8)"
+$ s "superpiano" >|
+n (arposc "major" 12 7 $ (perlin*isaw**2))
+|+ n 7
+# lpf 2000 # lpq 0.2 # gain 1.7
+# pan (range 0 1 sine+rand)
+
+d3 silence

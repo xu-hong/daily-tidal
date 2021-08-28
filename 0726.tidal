@@ -1,0 +1,110 @@
+--- explore pentatonic scale
+-- they are:
+-- five notes scales
+minPent :: Fractional a => [a]
+minPent = [0,3,5,7,10]
+majPent :: Fractional a => [a]
+majPent = [0,2,4,7,9]
+
+--  another mode of major pentatonic
+ritusen :: Fractional a => [a]
+ritusen = [0,2,5,7,9]
+
+-- another mode of major pentatonic
+egyptian :: Fractional a => [a]
+egyptian = [0,2,5,7,10]
+
+--
+kumai :: Fractional a => [a]
+kumai = [0,2,3,7,9]
+hirajoshi :: Fractional a => [a]
+hirajoshi = [0,2,3,7,8]
+iwato :: Fractional a => [a]
+iwato = [0,1,5,6,10]
+chinese :: Fractional a => [a]
+chinese = [0,4,6,7,11]
+indian :: Fractional a => [a]
+indian = [0,4,5,7,10]
+pelog :: Fractional a => [a]
+pelog = [0,1,3,7,8]
+
+--
+prometheus :: Fractional a => [a]
+prometheus = [0,2,4,6,11]
+scriabin :: Fractional a => [a]
+scriabin = [0,1,4,7,9]
+
+-- han chinese pentatonic scales
+gong :: Fractional a => [a]
+gong = [0,2,4,7,9]
+shang :: Fractional a => [a]
+shang = [0,2,5,7,10]
+jiao :: Fractional a => [a]
+jiao = [0,3,5,8,10]
+zhi :: Fractional a => [a]
+zhi = [0,2,5,7,9]
+yu :: Fractional a => [a]
+yu = [0,3,5,7,10]
+
+
+
+--- any combination sounds good?
+--- sounds good
+d1 $ n (arposc "pelog" -- or iwato, which is interesting too
+         12 5 $ slow 2 sine)
+   # s "superpiano"
+
+ -- $ slice 12 (segment 8 $ irand 12)
+d1
+-- -- both `segment` and `struct` gives structure to irand
+$ n (scale "iwato" $ segment 13 $ irand 6)
+-- $ n (scale "iwato" $ struct "t(5,7)" $ irand 8)
+-- $ n (scale "shang"
+--      $ struct "t(5,7)"
+--      $ slow 4 $ floor <$> range 0 9 sine+rand)
+# s "supersaw" # lpf 1200 # lpq 0.1
+# room 0.2 # sz 0.2
+
+
+
+---- mimic Ableton follow
+-- choose any pattern for next loop
+
+d1 $ cat [
+s "superpiano" >| n "c'maj a'min g'maj d'min"
+-- s $ struct "1(5,8)" $ choose ["bd", "chin", "~"]
+-- s "[bd bd bd bd | arpy | chin(5,8) | ~]"
+]
+
+
+let rslice x y = slice x (segment y $ irand x)
+
+let
+  rScale sc s = n (scale sc $ segment s $ irand s)
+
+
+
+d1 $ (0.25 <~)
+  $ sometimes justEcho
+  $ rslice 128 4 $ s "drone"
+
+
+
+let echo = stut' 2 0.125 ((# speed 0.9) . (# room 0.4) . (# gain 0.8) . (# delay 0.1))
+    rumble = stut' 8 0.0625 ((# room 0.4) . (# gain 0.8) . (# speed 1.2) . (# delay 0.1))
+    party = stut' 16 0.0625 ((# pan (truRand 24145))
+                             . (# gain (range 0.8 1.5 sine+(truRand 9796)))
+                             . (# vowel "<a o>")
+                             . (# room 0.1))
+    justEcho = stut' 2 0.125 (id)
+    shift x = (x <~)
+
+d1
+  $ echo
+  $ rslice 12 4 $ s "gabba" # pan (truRand 121414)
+
+d2
+  -- $ plydowndown 3 0.8
+  $ shift 0.4
+  -- $ sometimes justEcho
+  $ n "a ~ c ~" # s "superpiano"

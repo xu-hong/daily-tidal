@@ -1,0 +1,37 @@
+
+do
+  let romeo = scale "phrygian" "<0 2 3 4 1>(5,8)" # s "supersaw" # lpf 1000
+  d1
+  $ seqPLoop [
+  (0, 12, romeo),
+  (3, 15, s "909kick!4" ),
+  (4, 14, n "<c df>(3,8)" # s "bday" |+ n 24),
+  (10, 14, n "<ef af af bf>(3,8)" # s "bday" |+ n 36),
+  (15, 17, romeo # squiz 2)
+  ]
+
+let
+romeo = scale "phrygian" "<0 3 4 1>(5,8)" # s "supercomparator" # lpf 1000
+kk = s "house!4"
+in
+d1
+$ seqPLoop [
+(0, 12, romeo),
+(3, 15, kk),
+(5, 14, stitch "t(5, 8, <1 2>)" (s "dr2") (s "sh:3")),
+(4, 14, n "<c df>(3,8)" # s "bday" |+ n 24),
+(10, 14, n "<ef df c bf>(3,8)" # s "bday" |+ n 36),
+(15, 16, romeo # squiz 2),
+(16, 20, invnote' 5 romeo)
+]
+
+
+d1 $ chop 16 $ s "bang:0" # gain 2
+
+d1 $ slice 16 (segment 8 $ irand 16) $ s "bang:10"
+
+d2 $ s "house claus:5(3,8) dbass*2 dr2(5,8)"
+
+d2 $ n "as(5,8) b*2 [cs ~] ds(3,8)" # s "line"
+
+d2 $ s "sh!16?" # n "<3 9 10>" -- 3 is nice, or 9, 10

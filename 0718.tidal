@@ -1,0 +1,17 @@
+d1 -- $ chew 4 "1*2 ~ ~ 0 3 [~ 2] ~ ~"
+$ rarely (|+ n "19 0 0")
+$ stut' 3 (1/12) (|+ note "<5 7>") $ s "superpiano*4"
+
+d1 $ bite 4 "1 ~ 2 ~ . 3 3 3" $ n "0 .. 7" # sound "goldbd"
+
+d1 $ chew 4 "1 ~ 2 ~ . 3 3 3" $ n "0 .. 7" # sound "goldbd"
+
+
+--- explore delayK
+-- https://www.coursera.org/learn/technology-of-music-production/lecture/1w3n5/modulated-short-delays
+
+d2 $ s "fmr1" # n "c"
+# delay 0.5 # delaytime (10/1000) # delayfb 0.9
+-- # room 0.1 # sz 0.2
+
+hush

@@ -1,0 +1,28 @@
+-- inverse base p = listToPat $ map (\x -> base - (x - base)) p
+-- Usage:
+-- d3 $ s "supersaw" >| n (inverse 24 [0..12])
+-- # lpf 1000
+
+let plygato num amt = plyWith num (|* legato amt)
+    plydown num amt = plyWith num (|* gain amt)
+    plydowndown num amt = (plydown num amt) . (plydown num amt)
+
+-- usage
+d1 $ plygato 4 0.5 $ n "c g" # s "superpiano"
+
+invnote n = 0 - n
+invnote' axis n = 2 * axis - n
+-- usage
+d1 $ note (invnote' "7" "<c'maj7(5,8) d'm11(<3 [3 5]>,8)>")
+# s "superpiano" # room 0.5 # velocity 0.8
+
+let roundy p =  (fromIntegral . round) <$> p
+    stepr n r1 r2 f = segment n $ range r1 r2 $ f
+    stepr' n r1 r2 f = roundy $ stepr n r1 r2 f
+    arposc sc sg upper wave = scale sc (stepr' sg 0 upper wave)
+
+-- usage
+d1 $ n (stepr' 16 0 12 sine) # s "superpiano"
+d1 $ note (arposc "major" 16 7 perlin) # s "superpiano"
+d1 $ note (arposc "locrian" 16 12 (fast 2 $ isaw)) # s "superpiano"
+d1 $ note (arposc "dorian" 8 7 (fast 8 $ (perlin*isaw**2))) # s "superpiano"

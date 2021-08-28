@@ -1,0 +1,5 @@
+-- test synthdef in superdirt
+
+d1 $ s "bd ~ bd ~"
+
+hush

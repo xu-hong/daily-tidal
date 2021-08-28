@@ -1,0 +1,82 @@
+--- bpm 130 B major
+setcps(130/60/4)
+
+d1 -- $ every 3 (# crush "16 6")
+-- $ chunk 8 (# vowel "<o a>")
+$ loopAt 8
+$ striate 64
+$ s "frozen" # begin 0.1 # end 0.9 # n "<8 9 10>"
+
+d1 silence
+
+--------------------------------final
+
+d2 $ chunk 4 (# crush "<4 6>")  --------------------
+$ sometimes (# vowel "<o u q>")  ----------------
+$ every 2 (superimpose (|+ note "<-5 12 7 19>")) -- 5,7,3 or off "e"
+$ every 4 (jux rev) --
+$ iter 8 ----
+$ superimpose (stut 2 0.8 (1/16)) ------
+$ note "b'major7(3,8)" # s "bday"  ---(3,8) later added
+# att 0.1 # rel (range 1 10 sine)
+# gain (range 0.5 0.7 perlin)
+# pan (slow 2 $ range 0 1 $ tri+rand)
+# hpf 800 # hpq 0.1
+# lpf 1000
+
+d2 silence
+
+d3 $ s "[909kick*4, 909cp ~ 909cp ~, goldhh*16]"
+# n "1" # gain (slow 2 $ range 0.8 1 sine)
+
+d3 silence
+
+d4 $ swingBy (1/16) 4
+$ sometimes (|+ note "<12 0 19 -12>")
+$ off "<0.125 1/3>" (stut 8 0.3 "<0.25 0.125>")
+$ arp "up"
+$ note "b'major7" # s "bday"
+# delay (slow 2 $ range 0.2 0.9 sine) # delaytime 0.5
+# gain 0.6
+
+d4 silence
+
+d5 $ chop 16 $ s "vinyl:2" # legato 1 # gain 0.5
+
+d5 silence
+
+
+---- this is eerie
+d6 $ iter 8 $ degradeBy (1/16)
+$ every 2 (|+ note "<-7 0 12>")
+$ every 4 (# crush 6)
+$ off "q" (hurry "<1 2>") . rev
+$ arp "converge"
+$ s (wchoose [("superpiano", 4), ("supercomparator", 1)])
+>| note "b4'min7" --- major7
+# gain 0.8 # sus (range 1 5 sine) # legato 1
+
+
+
+hush
+
+--- experiment with melodic sample
+--- yay
+
+d1
+$ every 3 (# crush 6)
+$ sometimes (# vowel "<o a e>")
+$ degradeBy (1/8)
+$ chunk 8 (hurry 0.5)
+-- $ linger "<0.25 1>"
+$ superimpose (# delay 0.3) . (# delaytime 0.2) . (# delayfb 0.1)
+$ loopAt 8 $ chop 64 $ s "lunar:4" # gain 0.8
+-- # lpf (slow 2 $ range 1000 2500 sine)
+
+setcps(130/60/4)
+
+d2 $ s "[goldbd!4, ~ 909cp:1 ~ 909cp:2?, awstomp ~ ~ ~]" # n "0 1"
+
+
+-- d3 $ slow 2 $ n "~ g6(5,8) ~ [c6*3 c6]" # s (choose ["jvbass", "rash"])
+-- # sus 3 # rel 3

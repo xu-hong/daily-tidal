@@ -1,0 +1,25 @@
+
+d1 $ (0.25 <~)
+  $ sometimes justEcho
+  $ rslice 128 4 $ s "drone"
+
+
+
+let echo = stut' 2 0.125 ((# speed 0.9) . (# room 0.4) . (# gain 0.8) . (# delay 0.1))
+    rumble = stut' 8 0.0625 ((# room 0.4) . (# gain 0.8) . (# speed 1.2) . (# delay 0.1))
+    party = stut' 16 0.0625 ((# pan (truRand 24145))
+                             . (# gain (range 0.8 1.5 sine+(truRand 9796)))
+                             . (# vowel "<a o>")
+                             . (# room 0.1))
+    justEcho = stut' 2 0.125 (id)
+    shift x = (x <~)
+
+d1
+  $ echo
+  $ rslice 12 4 $ s "gabba" # pan (truRand 121414)
+
+d2
+  -- $ plydowndown 3 0.8
+  $ shift 0.4
+  -- $ sometimes justEcho
+  $ n "a ~ c ~" # s "superpiano"
