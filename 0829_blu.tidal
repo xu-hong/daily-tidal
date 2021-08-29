@@ -1,0 +1,27 @@
+setcps(140/60/4)
+
+d1
+$ rarely echo
+$ off 0.125 (|+ note 7)
+$ n (scale "zhi" $ (struct "t(5,8,<2 3>)" $ roundy $ irand 5))
+# s "padmh"
+# lpf (slow 2 $ range 800 2000 sine) # lpq 0.2
+
+m1
+
+
+d2
+$ rumble
+$ accident
+$ s "string"
+# n "< c c c d c d c f d f d f d g f g f g f a g a g a g a a a >"
+# room 0.1 # sz 0.3
+# gain 0.8
+
+m2
+
+d3 $ scramble 16 $ chop 16 $ s "bang:0" # gain 1
+
+d3 $ chop 8 $ s "vinyl:1" # gain 0.6
+
+d4 $ s "<dbass claus>? ~ ~"
