@@ -79,3 +79,5 @@ d1 $ off 0.25 (|+ n "<3 7>")
   $ off 0.125 (|- n 12)
   $ n "a'minor g'major f'major ~"
   # s "cs" # gain 0.8 # sus 0.6 # rel 1
+
+d1 $ fast 4 $ randslice 32 $ sound "bev"
