@@ -11,7 +11,7 @@ m1
 
 
 d2
-$ rumble
+-- $ rumble
 $ accident
 $ s "string"
 # n "< c c c d c d c f d f d f d g f g f g f a g a g a g a a a >"
@@ -20,8 +20,8 @@ $ s "string"
 
 m2
 
-d3 $ scramble 16 $ chop 16 $ s "bang:0" # gain 1
+d3 $ scramble 16 $ chop 16 $ s "bang:0" # gain 2
 
-d3 $ chop 8 $ s "vinyl:1" # gain 0.6
+xfade 3 $ chop 8 $ s "vinyl:1" # gain 0.5
 
-d4 $ s "<dbass claus>? ~ ~"
+d4 $ s "<dbass claus>?0.3 ~ ~"
