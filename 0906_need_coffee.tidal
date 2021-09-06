@@ -1,0 +1,27 @@
+
+
+d2
+$ every 3 (# vowel "<a o>")
+$ sometimes (0.3 <~)
+$ chop 16 $ s "dork2:3" # pan (range 0 1 sine) # gain (range 0.7 1.1 rand)
+
+m2
+
+
+d1 -- $ fast "<1 1 1 1 1 1 1 1 1 1.5>"
+$ s "[drum!4, ~ lt]" # room 0.1 # sz 0.1 # gain 0.7 # lpf 1000
+
+m1
+
+
+d3 $ s "chin:1!16" # pan (slow 3 $ range 0 1 sine) # gain 1
+
+m3
+
+
+d5 $ slow 2 $ s "808 ~ ~" # n "<0 1 2>" # crush 4 # gain 1
+
+
+d4 $ note "d2(5,8,<1 2 3>)" # s "arpy" # lpf 1000 # lpq 0.1 # gain 0.7
+
+m4
