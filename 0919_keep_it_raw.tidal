@@ -1,0 +1,25 @@
+d1
+  $ sometimes (plyWith 5 (# speed 1.1))
+  $ plyWith "<2 6 14>" ((|* gain 0.6) . (# vowel "<a o e>"))
+  $ striate 12
+  $ s "[bd cp, cp]"
+  # gain 0.7
+
+d2
+   $ slow 6
+   $ (|* speed (slow 2.1 $ range 1 1.5 sine))
+   $ striate' 128 (1/100)
+   $ s "bang" # n "<1 2>"
+   # begin 0.3 # end 0.8 # legato 1
+   # speed 1
+   # gain 1.5
+
+m2
+
+d3
+  $ jux rev
+  $ sometimes degrade
+  $ scale "phrygian" (struct "1(5,8)" $ irand 20)
+  # s "[arpy, cp1]"
+  |- note 12
+  # crush 6
