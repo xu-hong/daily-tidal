@@ -31,3 +31,12 @@ $ sometimes (# vowel "a")
 $ s "[house!4, ~ chaoscp:1 ~ ~]" # gain 2
 
 m3
+
+d1
+$ jux rev
+$ slow 3
+$ chop 16
+$ s "drone" # legato 1
+# n "<0 2 5>"
+# gain 1.5
+# room 0.2 # sz "<0.3 0.4>"
