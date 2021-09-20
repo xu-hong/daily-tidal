@@ -1,0 +1,33 @@
+d1
+$ stack [
+--   off 0.125 (|+ n 7)
+-- $ (off 0.25 (|+ n "<12 0 0 0 0>"))
+-- $ s "pad1"
+-- # n "<c4 d4 e4>"
+-- # gain 1 # legato "<1 1 1 0.6>"
+-- ,
+  off 0.25 (|+ n 12)
+$ off 0.125 (|+ n 7)
+$ rarely (|+ n "12 0 12")
+$ s "superpiano"
+>| n "e4(5,8,<1 2>)" -- <e5 e4 e4 e5 a5>
+# gain 0.7
+]
+
+m1
+
+
+d2
+$ s "[clak(3,8), chin!16?, ~ bass? ~ ~]"
+# n "<0 1 2>"
+# speed 2
+# gain( slow 3.2 $ range 0.8 1.5 sine)
+
+m2
+
+
+d3
+$ sometimes (# vowel "a")
+$ s "[house!4, ~ chaoscp:1 ~ ~]" # gain 2
+
+m3
